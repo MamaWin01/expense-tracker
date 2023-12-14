@@ -1,4 +1,5 @@
 import 'package:expense_app/Helper/mongodb.dart';
+import 'package:expense_app/widget/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_app/widget/page_not_found.dart';
 import 'package:expense_app/widget/first_page.dart';
@@ -47,15 +48,24 @@ Route<dynamic> routeList(RouteSettings routeSettings) {
         builder: (context) => const First_page(),
       );
       break;
-    case '/sign_in':
+    case '/login':
       route = MaterialPageRoute(
-        builder: (context) => const Sign_in(),
+        builder: (context) => const Login(),
       );
       break;
     case '/register':
       route = MaterialPageRoute(
         builder: (context) => const Register(),
       );
+      break;
+    case '/mainPage':
+      if (args != '') {
+        route = MaterialPageRoute(
+          builder: (context) => Main_page(token: args),
+        );
+      } else {
+        route = MaterialPageRoute(builder: (context) => const PageNotFound());
+      }
       break;
     default:
       route = MaterialPageRoute(builder: (context) => const PageNotFound());
