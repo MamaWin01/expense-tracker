@@ -1,4 +1,6 @@
+import 'package:expense_app/widget/main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class First_page extends StatefulWidget {
   const First_page({super.key});
@@ -8,9 +10,16 @@ class First_page extends StatefulWidget {
 }
 
 class _FirstPageState extends State<First_page> {
+  late SharedPreferences prefs;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
             width: 414,
             height: 932,
@@ -22,8 +31,12 @@ class _FirstPageState extends State<First_page> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset('assets/icon/icon.png', width: 145),
+                      borderRadius: BorderRadius.circular(23.0),
+                      child: Image.asset(
+                        'assets/icon/iconv2.png',
+                        width: 145,
+                        height: 185,
+                      ),
                     ),
                     const SizedBox(height: 100),
                     const Text(
