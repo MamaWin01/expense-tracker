@@ -37,7 +37,7 @@ void CreateAccount(context, String fullname, email, password) async {
               actions: <Widget>[
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pop(true);
+                    Navigator.pushNamed(context, '/login');
                   },
                   enableFeedback: false,
                   child: const Text('Ok'),

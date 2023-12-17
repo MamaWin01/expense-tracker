@@ -5,6 +5,7 @@ import 'package:expense_app/widget/page_not_found.dart';
 import 'package:expense_app/widget/first_page.dart';
 import 'package:expense_app/widget/sign_in.dart';
 import 'package:expense_app/widget/register.dart';
+import 'package:expense_app/widget/add_transaction.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -92,23 +93,17 @@ Route<dynamic> routeList(RouteSettings routeSettings) {
       break;
     case '/mainPage':
       if (args != '') {
-        Map<String, dynamic> jwtDecodedToken =
-            JwtDecoder.decode(args.toString());
-
-        var now = DateTime.now();
-        if (now.isAfter(DateTime.fromMillisecondsSinceEpoch(
-            jwtDecodedToken['exp'] * 1000))) {
-          route = MaterialPageRoute(
-            builder: (context) => const Login(),
-          );
-          break;
-        }
         route = MaterialPageRoute(
           builder: (context) => Main_page(token: args),
         );
       } else {
         route = MaterialPageRoute(builder: (context) => const PageNotFound());
       }
+      break;
+    case '/addTransaction':
+      route = MaterialPageRoute(
+        builder: (context) => const Add_transaction(),
+      );
       break;
     default:
       route = MaterialPageRoute(builder: (context) => const PageNotFound());

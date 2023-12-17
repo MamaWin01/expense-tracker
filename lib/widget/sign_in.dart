@@ -50,7 +50,6 @@ class _LoginState extends State<Login> {
         Timer(const Duration(seconds: 1), () {
           print('runnnnn');
           var myToken = jsonDecode(response.body)['token'];
-          prefs.reload();
           prefs.setString('token', myToken);
           count = 0;
           Navigator.pushNamed(context, '/mainPage', arguments: myToken);
@@ -78,8 +77,6 @@ class _LoginState extends State<Login> {
       debugPrint(exp.toString());
     }
   }
-
-  final bool _isNotValidate = false;
 
   void initSharedPref() async {
     prefs = await SharedPreferences.getInstance();
