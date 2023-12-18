@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -15,67 +16,67 @@ TextEditingController FullnameController = TextEditingController();
 TextEditingController EmailController = TextEditingController();
 TextEditingController PasswordController = TextEditingController();
 
-void CreateAccount(context, String fullname, email, password) async {
-  try {
-    Response response = await post(Uri.parse('$API_URL/register'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(
-            {'name': fullname, 'email': email, 'password': password}));
-
-    if (response.statusCode == 200) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            Future.delayed(const Duration(seconds: 5), () {
-              Navigator.pushNamed(context, '/login');
-            });
-            return AlertDialog(
-              title: const Text("Account Creation"),
-              content: const Text("Account have been created successfully"),
-              actions: <Widget>[
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  enableFeedback: false,
-                  child: const Text('Ok'),
-                )
-              ],
-            );
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text("Account Creation"),
-                content: Text(jsonDecode(response.body)['error'].toString()),
-                backgroundColor: const Color(0xFFFAFAFA),
-                actions: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    enableFeedback: false,
-                    child: const Text('Go back'),
-                  )
-                ],
-              ));
-    }
-  } catch (exp) {
-    debugPrint(exp.toString());
-  }
-}
-
 class _RegisterState extends State<Register> {
   bool _obscureText = true;
+  bool ispress = false;
 
   // Toggles the password show status
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void CreateAccount(context, String fullname, email, password) async {
+    try {
+      Response response = await post(Uri.parse('$API_URL/register'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+              {'name': fullname, 'email': email, 'password': password}));
+
+      if (response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                title: Text("Account Creation"),
+                backgroundColor: Colors.white,
+                content: Text(
+                    "Account have been created successfully, Redirecting one moment..."),
+              );
+            });
+        Timer(const Duration(seconds: 1), () {
+          Navigator.pushNamed(context, '/login');
+        });
+      } else {
+        setState(() {
+          ispress = false;
+        });
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text("Account Creation"),
+                  content: Text(jsonDecode(response.body)['error'].toString()),
+                  backgroundColor: const Color(0xFFFAFAFA),
+                  actions: <Widget>[
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          ispress = false;
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      enableFeedback: false,
+                      child: const Text('Go back'),
+                    )
+                  ],
+                ));
+      }
+    } catch (exp) {
+      debugPrint(exp.toString());
+    }
   }
 
   @override
@@ -226,17 +227,22 @@ class _RegisterState extends State<Register> {
                             backgroundColor: const Color(0xFF31A062),
                             fixedSize: const Size(300, 30),
                             enableFeedback: false),
-                        onPressed: () {
-                          CreateAccount(
-                              context,
-                              FullnameController.text.toString(),
-                              EmailController.text.toString(),
-                              PasswordController.text.toString());
-                        },
-                        child: const Text(
-                          'Create account',
+                        onPressed: ispress
+                            ? null
+                            : () {
+                                setState(() {
+                                  ispress = true;
+                                });
+                                CreateAccount(
+                                    context,
+                                    FullnameController.text.toString(),
+                                    EmailController.text.toString(),
+                                    PasswordController.text.toString());
+                              },
+                        child: Text(
+                          ispress ? 'Processing...' : 'Create account',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17,
                             fontFamily: 'DM Sans',

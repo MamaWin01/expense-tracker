@@ -69,6 +69,7 @@ class _AddTransasctionState extends State<Add_transaction> {
             builder: (context) {
               return const AlertDialog(
                 title: Text("Transaction"),
+                backgroundColor: Colors.white,
                 content: Text(
                     "Transaction added successfully, Redirecting to home page"),
               );

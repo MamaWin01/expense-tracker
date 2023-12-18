@@ -20,6 +20,7 @@ TextEditingController PasswordController = TextEditingController();
 class _LoginState extends State<Login> {
   bool _obscureText = true;
   int count = 0;
+  bool ispress = false;
   late SharedPreferences prefs;
 
   // Toggles the password show status
@@ -44,6 +45,7 @@ class _LoginState extends State<Login> {
             builder: (context) {
               return const AlertDialog(
                 title: Text("Login"),
+                backgroundColor: Colors.white,
                 content: Text("Login successfully, Redirecting one moment"),
               );
             });
@@ -55,6 +57,9 @@ class _LoginState extends State<Login> {
           Navigator.pushNamed(context, '/mainPage', arguments: myToken);
         });
       } else {
+        setState(() {
+          ispress = false;
+        });
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -202,20 +207,22 @@ class _LoginState extends State<Login> {
                               backgroundColor: const Color(0xFF31A062),
                               fixedSize: const Size(300, 30),
                               enableFeedback: false),
-                          onPressed: () {
-                            if (count == 0) {
-                              LoginAccount(
-                                  context,
-                                  prefs,
-                                  EmailController.text.toString(),
-                                  PasswordController.text.toString());
-                              count++;
-                            }
-                          },
-                          child: const Text(
-                            'Login',
+                          onPressed: ispress
+                              ? null
+                              : () {
+                                  setState(() {
+                                    ispress = true;
+                                  });
+                                  LoginAccount(
+                                      context,
+                                      prefs,
+                                      EmailController.text.toString(),
+                                      PasswordController.text.toString());
+                                },
+                          child: Text(
+                            ispress ? 'Processing...' : 'Login',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 17,
                               fontFamily: 'DM Sans',

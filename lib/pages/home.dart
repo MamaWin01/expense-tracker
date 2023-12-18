@@ -43,11 +43,6 @@ class _HomePageState extends State<Home> {
     }
   }
 
-  deleteToken() async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -308,7 +303,7 @@ class _HomePageState extends State<Home> {
                     ),
                     Container(
                       child: transaction.length == 0
-                          ? const Text('getting data...')
+                          ? const Text('No Recent History...')
                           : Expanded(
                               child: SizedBox(
                               child: ListView.builder(
