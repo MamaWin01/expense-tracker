@@ -6,6 +6,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:expense_app/pages/home.dart';
+import 'package:expense_app/pages/transaction.dart';
+import 'package:expense_app/pages/profile.dart';
 import 'package:expense_app/Helper/constant.dart';
 
 class Main_page extends StatefulWidget {
@@ -16,10 +18,12 @@ class Main_page extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<Main_page> {
+class _MainPageState extends State<Main_page> with TickerProviderStateMixin {
   late String name;
   int _selectedIndex = 0;
   late SharedPreferences prefs;
+  late AnimationController controller;
+  PageController _pageController = PageController();
   @override
   void initState() {
     super.initState();
@@ -30,16 +34,6 @@ class _MainPageState extends State<Main_page> {
     prefs.remove('token');
   }
 
-  static const List<Widget> _NavbarOption = <Widget>[
-    Home(),
-    Text(
-      'Index 1: Business',
-    ),
-    Text(
-      'Index 2: School',
-    ),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -48,30 +42,15 @@ class _MainPageState extends State<Main_page> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: GestureDetector(
-            child: const Icon(
-              Icons.menu,
-              color: Colors.black,
-            ),
-            onTap: () {
-              deleteToken();
-              Navigator.pushNamed(context, '/');
-            },
-          ),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.notifications_none_rounded,
-                    size: 26.0,
-                  ),
-                )),
-          ],
+        body: PageView(
+          controller: _pageController,
+          children: [Home(), Transaction(), Profile()],
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
         ),
-        body: _NavbarOption.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
@@ -90,7 +69,14 @@ class _MainPageState extends State<Main_page> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: const Color(0xFF31A062),
-          onTap: _onItemTapped,
+          onTap: (index) {
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          },
+          enableFeedback: false,
         ));
   }
 }

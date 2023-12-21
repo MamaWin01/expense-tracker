@@ -12,7 +12,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await MongoDatabase.connect();
+  // await MongoDatabase.connect();
   runApp(const MyApp());
 }
 
@@ -43,6 +43,23 @@ class _MyHomePageState extends State<MyApp> {
 }
 
 class AutoLogin extends StatelessWidget {
+  late SharedPreferences prefs;
+
+  getToken() async {
+    prefs = await SharedPreferences.getInstance();
+    var test = prefs.getString('token');
+    var jwtDecodedToken = JwtDecoder.decode(test.toString());
+
+    var now = DateTime.now();
+    // if (now.isAfter(
+    //     DateTime.fromMillisecondsSinceEpoch(jwtDecodedToken['exp'] * 1000))) {
+    //   Navigator.pushNamed(context, '/login');
+    // }
+    if (true) {
+      return 'yey';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -53,9 +70,18 @@ class AutoLogin extends StatelessWidget {
             case ConnectionState.done:
               var x = prefs.data;
               if (x?.getString('token') != null) {
-                return Main_page(
-                  token: x?.getString('token'),
-                );
+                var test = x?.getString('token');
+                var jwtDecodedToken = JwtDecoder.decode(test.toString());
+                var now = DateTime.now();
+                var exp = now.isAfter(DateTime.fromMillisecondsSinceEpoch(
+                    jwtDecodedToken['exp'] * 1000));
+                if (exp) {
+                  return const First_page();
+                } else {
+                  return Main_page(
+                    token: x?.getString('token'),
+                  );
+                }
               } else {
                 return const First_page();
               }
@@ -74,6 +100,7 @@ Route<dynamic> routeList(RouteSettings routeSettings) {
   final args = routeSettings.arguments;
   final Route<dynamic> route;
   print('route being use');
+  print(args);
 
   switch (routeSettings.name) {
     case '/':

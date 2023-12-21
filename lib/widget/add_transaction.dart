@@ -84,7 +84,7 @@ class _AddTransasctionState extends State<Add_transaction> {
             builder: (context) => AlertDialog(
                   title: const Text("Transaction"),
                   content: Text(
-                      "Transaction ${jsonDecode(response.body)['error'].toString()}"),
+                      "Transaction Failed, ${jsonDecode(response.body)['error'].toString()}"),
                   backgroundColor: const Color(0xFFFAFAFA),
                   actions: <Widget>[
                     InkWell(
@@ -207,6 +207,8 @@ class _AddTransasctionState extends State<Add_transaction> {
                                   child: child!,
                                 );
                               },
+                              initialEntryMode:
+                                  DatePickerEntryMode.calendarOnly,
                               initialDate: DateTime.now(),
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2101));
@@ -316,6 +318,7 @@ class _AddTransasctionState extends State<Add_transaction> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                        enableFeedback: false,
                         hint: _dropDownValue == null
                             ? const Text('Status')
                             : Text(
@@ -366,6 +369,7 @@ class _AddTransasctionState extends State<Add_transaction> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                        enableFeedback: false,
                         hint: _dropDownValue2 == null
                             ? const Text('Payment Type')
                             : Text(
