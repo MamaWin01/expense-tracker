@@ -17,6 +17,25 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  dynamic name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  fetchData() async {
+    var prefs = await SharedPreferences.getInstance();
+    var test = prefs?.getString('token');
+    var jwtDecodedToken = JwtDecoder.decode(test.toString());
+    if (mounted) {
+      setState(() {
+        name = "${jwtDecodedToken['name']}";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +54,57 @@ class _ProfileState extends State<Profile> {
               ),
             );
           },
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            CircleAvatar(
+              radius: 70,
+              backgroundColor: Colors.transparent,
+              backgroundImage: AssetImage('assets/images/Default_Image.png'),
+            ),
+            const SizedBox(width: 20.0),
+            Text(
+              name == null ? '' : name,
+              style: TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 20.0),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.account_box_rounded),
+                title: const Text('Edit Account'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.pushNamed(context, '/edit_profile');
+                },
+                enableFeedback: false,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.account_balance),
+                title: const Text('Bank Account Info'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.pushNamed(context, '/bank_info');
+                },
+                enableFeedback: false,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.credit_card),
+                title: const Text('E-Wallet Info'),
+                trailing: const Icon(Icons.chevron_right),
+                enableFeedback: false,
+                onTap: () => {Navigator.pushNamed(context, '/ewallet_info')},
+              ),
+            )
+          ],
         ),
       ),
     );

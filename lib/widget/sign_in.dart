@@ -70,6 +70,10 @@ class _LoginState extends State<Login> {
                   actions: <Widget>[
                     InkWell(
                       onTap: () {
+                        setState(() {
+                          EmailController.text = '';
+                          PasswordController.text = '';
+                        });
                         Navigator.of(context).pop();
                       },
                       enableFeedback: false,

@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import 'package:expense_app/Helper/mongodb.dart';
 import 'package:expense_app/widget/main_page.dart';
-import 'package:flutter/material.dart';
 import 'package:expense_app/widget/page_not_found.dart';
 import 'package:expense_app/widget/first_page.dart';
 import 'package:expense_app/widget/sign_in.dart';
 import 'package:expense_app/widget/register.dart';
 import 'package:expense_app/widget/add_transaction.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:expense_app/widget/edit_profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,10 +53,6 @@ class AutoLogin extends StatelessWidget {
     var jwtDecodedToken = JwtDecoder.decode(test.toString());
 
     var now = DateTime.now();
-    // if (now.isAfter(
-    //     DateTime.fromMillisecondsSinceEpoch(jwtDecodedToken['exp'] * 1000))) {
-    //   Navigator.pushNamed(context, '/login');
-    // }
     if (true) {
       return 'yey';
     }
@@ -130,6 +128,11 @@ Route<dynamic> routeList(RouteSettings routeSettings) {
     case '/addTransaction':
       route = MaterialPageRoute(
         builder: (context) => const Add_transaction(),
+      );
+      break;
+    case '/edit_profile':
+      route = MaterialPageRoute(
+        builder: (context) => const EditProfile(),
       );
       break;
     default:

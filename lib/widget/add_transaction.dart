@@ -182,7 +182,7 @@ class _AddTransasctionState extends State<Add_transaction> {
                           ),
                           hintText:
                               DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                          prefixIcon: const Icon(Icons.calendar_today),
+                          prefixIcon: const Icon(Icons.calendar_month),
                         ),
                         onTap: () async {
                           dynamic pickedDate = await showDatePicker(
