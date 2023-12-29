@@ -40,6 +40,18 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          'Account',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontFamily: 'DM Sans',
+            fontWeight: FontWeight.w500,
+            height: 0,
+          ),
+        ),
+        centerTitle: true,
         surfaceTintColor: Colors.transparent,
         leading: GestureDetector(
           child: const Icon(
@@ -50,7 +62,9 @@ class _ProfileState extends State<Profile> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Main_page(),
+                builder: (context) => Main_page(
+                  initialIndex: 0,
+                ),
               ),
             );
           },
@@ -72,6 +86,7 @@ class _ProfileState extends State<Profile> {
             ),
             const SizedBox(height: 20.0),
             Card(
+              color: Colors.white,
               child: ListTile(
                 leading: const Icon(Icons.account_box_rounded),
                 title: const Text('Edit Account'),
@@ -84,6 +99,7 @@ class _ProfileState extends State<Profile> {
             ),
             const SizedBox(height: 10.0),
             Card(
+              color: Colors.white,
               child: ListTile(
                 leading: const Icon(Icons.account_balance),
                 title: const Text('Bank Account Info'),
@@ -96,6 +112,7 @@ class _ProfileState extends State<Profile> {
             ),
             const SizedBox(height: 10.0),
             Card(
+              color: Colors.white,
               child: ListTile(
                 leading: const Icon(Icons.credit_card),
                 title: const Text('E-Wallet Info'),

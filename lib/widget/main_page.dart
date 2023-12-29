@@ -12,7 +12,9 @@ import 'package:expense_app/Helper/constant.dart';
 
 class Main_page extends StatefulWidget {
   final token;
-  const Main_page({this.token, super.key});
+  final int initialIndex;
+  const Main_page({this.token, required this.initialIndex, Key? key})
+      : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -23,10 +25,12 @@ class _MainPageState extends State<Main_page> with TickerProviderStateMixin {
   int _selectedIndex = 0;
   late SharedPreferences prefs;
   late AnimationController controller;
-  PageController _pageController = PageController();
+  late PageController _pageController;
   @override
   void initState() {
     super.initState();
+    _selectedIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
   }
 
   deleteToken() async {

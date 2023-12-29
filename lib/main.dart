@@ -1,3 +1,6 @@
+import 'package:expense_app/widget/subwidget/add_bank.dart';
+import 'package:expense_app/widget/subwidget/add_ewallet.dart';
+import 'package:expense_app/widget/subwidget/ewallet_info.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -10,6 +13,7 @@ import 'package:expense_app/widget/sign_in.dart';
 import 'package:expense_app/widget/register.dart';
 import 'package:expense_app/widget/add_transaction.dart';
 import 'package:expense_app/widget/edit_profile.dart';
+import 'package:expense_app/widget/subwidget/bank_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,6 +82,7 @@ class AutoLogin extends StatelessWidget {
                 } else {
                   return Main_page(
                     token: x?.getString('token'),
+                    initialIndex: 0,
                   );
                 }
               } else {
@@ -119,7 +124,10 @@ Route<dynamic> routeList(RouteSettings routeSettings) {
     case '/mainPage':
       if (args != '') {
         route = MaterialPageRoute(
-          builder: (context) => Main_page(token: args),
+          builder: (context) => Main_page(
+            token: args,
+            initialIndex: 0,
+          ),
         );
       } else {
         route = MaterialPageRoute(builder: (context) => const PageNotFound());
@@ -133,6 +141,26 @@ Route<dynamic> routeList(RouteSettings routeSettings) {
     case '/edit_profile':
       route = MaterialPageRoute(
         builder: (context) => const EditProfile(),
+      );
+      break;
+    case '/bank_info':
+      route = MaterialPageRoute(
+        builder: (context) => const BankInfo(),
+      );
+      break;
+    case '/add_bank':
+      route = MaterialPageRoute(
+        builder: (context) => const AddBank(),
+      );
+      break;
+    case '/ewallet_info':
+      route = MaterialPageRoute(
+        builder: (context) => const EWalletInfo(),
+      );
+      break;
+    case '/add_ewallet':
+      route = MaterialPageRoute(
+        builder: (context) => const AddEWallet(),
       );
       break;
     default:

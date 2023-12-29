@@ -42,10 +42,10 @@ class _TransactionState extends State<Transaction> {
   fetchData() async {
     var reqDate = DatetimeController.text;
     var status = (StatusController.text == '' || StatusController.text == 'all')
-        ? '101'
+        ? ''
         : StatusController.text;
     var type = (TypeController.text == '' || TypeController.text == 'all')
-        ? '101'
+        ? ''
         : TypeController.text;
     var prefs = await SharedPreferences.getInstance();
     var test = prefs?.getString('token');
@@ -139,6 +139,18 @@ class _TransactionState extends State<Transaction> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          'Search Transaction',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontFamily: 'DM Sans',
+            fontWeight: FontWeight.w500,
+            height: 0,
+          ),
+        ),
+        centerTitle: true,
         surfaceTintColor: Colors.transparent,
         leading: GestureDetector(
           child: const Icon(
@@ -149,11 +161,11 @@ class _TransactionState extends State<Transaction> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Main_page(),
+                builder: (context) => Main_page(
+                  initialIndex: 0,
+                ),
               ),
             );
-            // deleteToken();
-            // Navigator.pushNamed(context, '/');
           },
         ),
         actions: <Widget>[
@@ -191,20 +203,6 @@ class _TransactionState extends State<Transaction> {
                 left: 30,
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Column(children: [
-              const Text(
-                'Search transaction',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'DM Sans',
-                  fontWeight: FontWeight.w500,
-                  height: 0,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               SizedBox(
                 height: 40,
                 width: 310,
@@ -579,16 +577,15 @@ class LoadingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-        backgroundColor: Colors.transparent,
-        child: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-              )
-            ],
-          ),
-        ));
+      backgroundColor: Colors.transparent,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          )
+        ],
+      ),
+    );
   }
 }
