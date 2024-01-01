@@ -40,7 +40,7 @@ class _FirstPageState extends State<First_page> {
                     ),
                     const SizedBox(height: 100),
                     const Text(
-                      'Keep a track with your finance',
+                      'Keep track with your finance',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,

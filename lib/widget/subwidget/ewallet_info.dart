@@ -102,75 +102,76 @@ class _EWalletState extends State<EWalletInfo> {
           context: context,
           builder: (context) => AlertDialog(
                 title: const Text("Edit EWallet Info"),
-                content: Expanded(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TextField(
-                      textAlign: TextAlign.justify,
-                      controller: NameController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              width: 0.50, color: Color(0xFF828282)),
-                          borderRadius: BorderRadius.circular(10),
+                content: Stack(fit: StackFit.loose, children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TextField(
+                        textAlign: TextAlign.justify,
+                        controller: NameController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                width: 0.50, color: Color(0xFF828282)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                width: 2.5, color: Color(0xFF31A062)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          labelText: "EWallet name",
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              width: 2.5, color: Color(0xFF31A062)),
-                          borderRadius: BorderRadius.circular(10),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w400,
+                          height: 1,
                         ),
-                        labelText: "EWallet name",
                       ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontFamily: 'DM Sans',
-                        fontWeight: FontWeight.w400,
-                        height: 1,
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextField(
-                      controller: AmountController,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        signed: true,
-                        decimal: true,
-                      ),
-                      inputFormatters: [
-                        // FilteringTextInputFormatter.digitsOnly,
-                        CurrencyInputFormatter()
-                      ],
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              width: 0.50, color: Color(0xFF828282)),
-                          borderRadius: BorderRadius.circular(10),
+                      TextField(
+                        controller: AmountController,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          signed: true,
+                          decimal: true,
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              width: 2.5, color: Color(0xFF31A062)),
-                          borderRadius: BorderRadius.circular(10),
+                        inputFormatters: [
+                          // FilteringTextInputFormatter.digitsOnly,
+                          CurrencyInputFormatter()
+                        ],
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                width: 0.50, color: Color(0xFF828282)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                width: 2.5, color: Color(0xFF31A062)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          labelText: "Amount",
                         ),
-                        labelText: "Amount",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w400,
+                          height: 1,
+                        ),
                       ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontFamily: 'DM Sans',
-                        fontWeight: FontWeight.w400,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                )),
+                    ],
+                  )
+                ]),
                 backgroundColor: Colors.white,
                 actions: <Widget>[
                   InkWell(

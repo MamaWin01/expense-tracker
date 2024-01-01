@@ -67,6 +67,19 @@ changeScreen(int index) async {
   prefs.setString('current_screen', index.toString());
 }
 
+getAccountInfo(data) async {
+  try {
+    Response response = await post(Uri.parse('$API_URL/getAccountInfo'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({'email': data['email']}));
+    return jsonDecode(response.body);
+  } catch (err) {
+    debugPrint(err.toString());
+  }
+}
+
 class CurrencyInputFormatter extends TextInputFormatter {
   final validationRegex = RegExp(r'^[\d,]*\.?\d*$');
   final replaceRegex = RegExp(r'[^\d\.]+');

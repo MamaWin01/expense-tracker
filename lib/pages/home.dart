@@ -65,8 +65,8 @@ class _HomePageState extends State<Home> {
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Transaction Detail"),
-              content: Expanded(
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
+              content: Stack(fit: StackFit.loose, children: [
+                Column(mainAxisSize: MainAxisSize.min, children: [
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -109,7 +109,7 @@ class _HomePageState extends State<Home> {
                         ),
                       )),
                 ]),
-              ),
+              ]),
               backgroundColor: const Color(0xFFFAFAFA),
               actions: <Widget>[
                 InkWell(
@@ -300,7 +300,7 @@ class _HomePageState extends State<Home> {
                       ],
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, '/e-wallet');
+                      Navigator.pushNamed(context, '/ewallet_info');
                     },
                   )
                 ]),

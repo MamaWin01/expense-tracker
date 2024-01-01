@@ -78,8 +78,8 @@ class _TransactionState extends State<Transaction> {
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Transaction Detail"),
-              content: Expanded(
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
+              content: Stack(fit: StackFit.loose, children: [
+                Column(mainAxisSize: MainAxisSize.min, children: [
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -122,7 +122,7 @@ class _TransactionState extends State<Transaction> {
                         ),
                       )),
                 ]),
-              ),
+              ]),
               backgroundColor: const Color(0xFFFAFAFA),
               actions: <Widget>[
                 InkWell(
@@ -327,7 +327,7 @@ class _TransactionState extends State<Transaction> {
                             } else if (newval == 'Income') {
                               StatusController.text = '1';
                             } else {
-                              StatusController.text = '101';
+                              StatusController.text = '';
                             }
                             _dropDownValue = val.toString();
                           },
@@ -392,7 +392,7 @@ class _TransactionState extends State<Transaction> {
                             } else if (newval == 'Cash/Other') {
                               TypeController.text = '2';
                             } else {
-                              TypeController.text = '101';
+                              TypeController.text = '';
                             }
                             _dropDownValue2 = newval;
                           },

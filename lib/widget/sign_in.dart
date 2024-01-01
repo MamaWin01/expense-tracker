@@ -185,6 +185,7 @@ class _LoginState extends State<Login> {
                           ),
                           labelText: "Password",
                           suffixIcon: IconButton(
+                            enableFeedback: false,
                             icon: Icon(_obscureText
                                 ? Icons.visibility_off
                                 : Icons.visibility),
